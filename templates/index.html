@@ -1,0 +1,83 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
+  <div class="container">
+    <div class="jumbotron" style="background-color:#01080c !important;">
+      <h2 style="color:#fff;">Carseat Sales Predictor</h2>      
+      <p style="color:#fff;">Using Machine Learning to Predict Carseat Sales</label></p>
+    </div>          
+  </div>
+
+
+  <div class="panel-group">
+    <div class="panel panel-primary">
+
+      <div class="panel-heading" style="background-color:#1563ff ">Please, provide the next 3 inputs and press the button to obtain the prediction:</div>
+      
+      <div class="panel-body" style="background-color: green">      
+        <!-- Main Input For Receiving Query to our ML -->	
+        <form action="{{ url_for('predict')}}" method="POST" id="inputform">
+
+          <!-- field receiving the price input -->
+          {% if priceholder==null %}
+            <input type="number" name="pricequery" placeholder='Enter Price'>
+          {% else %}
+            <input type="number" name="pricequery" value={{priceholder}}>
+          {% endif %}
+
+          <!-- field receiving the shelf location quality input -->
+          <select name="shelvelocquery" form="inputform" oninput="Medium">
+            {% if shelveLoc==2 or shelveLoc==null %}
+              <option selected>Good</option>
+            {% else %}
+              <option>Good</option>
+            {% endif %}
+            {% if shelveLoc==1 %}
+              <option selected>Medium</option>
+            {% else %}
+              <option>Medium</option>
+            {% endif %}
+            {% if shelveLoc==0 %}
+              <option selected>Bad</option>
+            {% else %}
+              <option>Bad</option>
+            {% endif %}
+          </select>
+
+          <!-- field receiving the advertisement budget input -->
+          {% if adholder==null %}
+            <input type="number" name="advertisingquery" placeholder="Enter Ad. Expenditure">
+          {% else %}
+            <input type="number" name="advertisingquery" value={{adholder}}>
+          {% endif %}
+
+          <button type="submit" class="btn btn-primary">Predict Sales</button>
+
+        </form>
+        <!-- Main Input For Receiving Query to our ML --> 
+      </div>
+    </div>
+  </div>
+
+  <!-- Field containing the prediction result-->
+  <div class="panel-body">
+      <div class="card-header">
+        {% if result==null %}
+          
+        {% else %}
+          predicted sales (in thousands): {{result}}
+        {% endif %}
+      </div>
+  </div></p>
+
+
+
+
+{% endblock %}
+
+{% block styles %}
+{{super()}} <!-- Allows Javascripts and other styles to be inclusive in bootstrap -->
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='css/styles.css')}}">
+{% endblock %}
+
