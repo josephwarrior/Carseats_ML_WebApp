@@ -23,7 +23,7 @@ def predict():
 	# Loading the ML Model. Which was previously created, trained and saved.
 	tree_regressor = pickle.load(open("models/tree_model.pickle","rb"))
 
-
+	t=8
 	# Receives the input query from form
 	if request.method == 'POST':
 		# Receives the price input:
